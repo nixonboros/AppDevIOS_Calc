@@ -11,6 +11,11 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
 
+// Ensure there are enough arguements
+if args.count < 3 {
+    print("Error: Not enough arguements")
+}
+
 // Retrieve User Input
 let no1 = args[0]; // Sample Code Only! Update Required!
 let operatorSymbol = args[1]; // Sample Code Only! Update Required!
@@ -30,10 +35,11 @@ if let num1 = Int(no1), let num2 = Int(no2) {
     case "-":
         result = calculator.subtract(no1: num1, no2: num2)
     default:
-        print("Error..")
+        print("Error: Unsupported operator")
         exit(1)
     }
     
-    // Output the result
+    // Output result
+    print(no1 + " " + operatorSymbol + " " + no2) // testing
     print(result)
 }

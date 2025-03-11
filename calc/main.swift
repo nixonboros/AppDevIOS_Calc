@@ -42,7 +42,7 @@ if let initialNum = Int(args[0]) {
             case "-":
                 result = calculator.subtract(no1: result, no2: nextNumber)
             default:
-                print("Error: Unsupported operator")
+                print("Error: Invalid operator")
                 exit(1)
             }
         }

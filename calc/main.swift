@@ -12,14 +12,28 @@ var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
 
 // Retrieve User Input
-//let no1 = args[0]; // Sample Code Only! Update Required!
-//let operator = args[1]; // Sample Code Only! Update Required!
-//let no2 = args[2]; // Sample Code Only! Update Required!
+let no1 = args[0]; // Sample Code Only! Update Required!
+let operatorSymbol = args[1]; // Sample Code Only! Update Required!
+let no2 = args[2]; // Sample Code Only! Update Required!
 
 // Initialize a Calculator object
 let calculator = Calculator();
 
-// Calculate the result
-let result = calculator.add(no1: 1, no2: 1);
-
-print(result)
+// Parse the first number, operator, and second number
+if let num1 = Int(no1), let num2 = Int(no2) {
+    var result = 0
+    
+    // Perform calc based on the operator
+    switch operatorSymbol {
+    case "+":
+        result = calculator.add(no1: num1, no2: num2)
+    case "-":
+        result = calculator.subtract(no1: num1, no2: num2)
+    default:
+        print("Error..")
+        exit(1)
+    }
+    
+    // Output the result
+    print(result)
+}

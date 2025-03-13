@@ -56,7 +56,6 @@ if let initialNum = Int(args[0]) {
     
     // Output result
     print(result)
-    print("TEST") // remove
 }
 else {
     print("Error: Invalid input")

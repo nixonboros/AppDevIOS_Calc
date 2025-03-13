@@ -11,26 +11,43 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
 
-// Ensure there are enough arguements
+// Ensure there are enough arguements (at least 3)
 if args.count < 3 {
     print("Error: Not enough arguements")
 }
-
-// Retrieve User Input
-//let no1 = args[0]; // Sample Code Only! Update Required!
-//let operatorSymbol = args[1]; // Sample Code Only! Update Required!
-//let no2 = args[2]; // Sample Code Only! Update Required!
 
 // Initialize a Calculator object
 let calculator = Calculator();
 
 // First pass: handle multiplication. division, modulus
 var argsArray = [String]()
-var result = Int(args[0])!
+var result = 0
+
+// Check if first arg is a valid int (if valid first arg is assigned to 'result')
+if let firstNum = Int(args[0]) {
+    result = firstNum
+} else {
+    print("Error: Invalid first number")
+    exit(1)
+}
+
 
 var index = 1
 while index < args.count {
     let operatorSymbol = args[index]
+    
+    // Check if operator is valid
+    if !["+", "-", "x", "/", "%"].contains(operatorSymbol) {
+        print("Error: Invalid operator '\(operatorSymbol)' in first pass")
+        exit(1)
+    }
+    
+    // Ensure the next arg is a valid int num
+    if index + 1 >= args.count || Int(args[index + 1]) == nil {
+        print("Error: Invalid number after operator '\(operatorSymbol)' in first pass")
+        exit(1)
+    }
+
     let nextNumber = Int(args[index + 1])!
     
     switch operatorSymbol {
@@ -56,6 +73,19 @@ result = Int(argsArray[0])!
 index = 1
 while index < argsArray.count {
     let operatorSymbol = argsArray[index]
+    
+    // Check if operator is valid
+    if !["+", "-"].contains(operatorSymbol) {
+        print("Error: Invalid operator '\(operatorSymbol)' in second pass")
+        exit(1)
+    }
+    
+    // Ensure the next arg is a valid int num
+    if index + 1 >= args.count || Int(args[index + 1]) == nil {
+        print("Error: Invalid number after operator '\(operatorSymbol)' in second pass")
+        exit(1)
+    }
+
     let nextNumber = Int(argsArray[index + 1])!
     
     switch operatorSymbol {

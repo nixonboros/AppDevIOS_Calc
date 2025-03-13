@@ -36,10 +36,18 @@ class Calculator {
     }
     
     func divide(no1: Int, no2: Int) -> Int {
+        if no2 == 0 {
+            print("Error: Division by zero")
+            exit(1)
+        }
         return no1 / no2
     }
     
     func modulus(no1: Int, no2: Int) -> Int {
+        if no2 == 0 {
+            print("Error: Modulus by zero")
+            exit(1)
+        }
         return no1 % no2
     }
     

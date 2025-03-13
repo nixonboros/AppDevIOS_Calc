@@ -24,39 +24,52 @@ if args.count < 3 {
 // Initialize a Calculator object
 let calculator = Calculator();
 
-// Perform calculations (starts with first num)
-if let initialNum = Int(args[0]) {
-    var result = initialNum
+// First pass: handle multiplication. division, modulus
+var argsArray = [String]()
+var result = Int(args[0])!
+
+var index = 1
+while index < args.count {
+    let operatorSymbol = args[index]
+    let nextNumber = Int(args[index + 1])!
     
-    // Calculations with remaining args (operators and nums)
-    var currentIndex = 1
-    while currentIndex < args.count {
-        let operatorSymbol = args[currentIndex]
-        currentIndex = currentIndex + 1
-        
-        if currentIndex < args.count, let nextNumber = Int(args[currentIndex]) {
-            // Performs calculation based on operator
-            switch operatorSymbol {
-            case "+":
-                result = calculator.add(no1: result, no2: nextNumber)
-            case "-":
-                result = calculator.subtract(no1: result, no2: nextNumber)
-            default:
-                print("Error: Invalid operator")
-                exit(1)
-            }
-        }
-        else {
-            print("Error: Invalid number after operator")
-            exit(1)
-        }
-        
-        currentIndex = currentIndex + 1
+    switch operatorSymbol {
+        case "x":
+            result = calculator.multiply(no1: result, no2: nextNumber)
+        case "/":
+            result = calculator.divide(no1: result, no2: nextNumber)
+        case "%":
+            result = calculator.modulus(no1: result, no2: nextNumber)
+        default:
+            argsArray.append((String(result)))
+            argsArray.append(operatorSymbol)
+            result = nextNumber
     }
     
-    // Output result
-    print(result)
+    index = index + 2
 }
-else {
-    print("Error: Invalid input")
+argsArray.append(String(result))
+
+// Second pass: handle addition, subtraction
+result = Int(argsArray[0])!
+
+index = 1
+while index < argsArray.count {
+    let operatorSymbol = argsArray[index]
+    let nextNumber = Int(argsArray[index + 1])!
+    
+    switch operatorSymbol {
+        case "+":
+            result = calculator.add(no1: result, no2: nextNumber)
+        case "-":
+            result = calculator.subtract(no1: result, no2: nextNumber)
+        default:
+            print("Error: Invalid operator in second pass")
+        exit(1)
+    }
+    
+    index = index + 2
 }
+
+// Output result
+print(result)

@@ -11,9 +11,22 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
 
-// Ensure there are enough arguements (at least 3)
-if args.count < 3 {
-    print("Error: Not enough arguements")
+// Ensure there is at least 1 arg
+if args.count < 1 {
+    print("Error: No arguements given")
+    exit(1)
+}
+
+// If only one arg is given, check if is a valid int
+if args.count == 1 {
+    if let singleArg = Int(args[0]) {
+        print(singleArg)
+        exit(0)
+    }
+    else {
+        print("Error: Invalid number")
+        exit(1)
+    }
 }
 
 // Initialize a Calculator object
